@@ -4,14 +4,15 @@ const app = express();
 
 app.use(express.json())
 
-app.post('/', function(req, res, next) {
+app.post('/', async function(req, res, next) {
   try {
-    let results = req.body.developers.map(async d => {
-      return await axios.get(`https://api.github.com/users/${d}`);
-    });
-    let out = results.map(r => ({ name: r.data.name, bio: r.data.bio }));
+    let result = []
+    for (d of req.body.developers) {
+      let response = await axios.getAdapter(`https://api.github.com/users/${d}`)
+      result.push({"bio": response.data.bio, "name": response.data.name})
+    }
 
-    return res.send(JSON.stringify(out));
+    return res.send(result);
   } catch {
     next(err);
   }
