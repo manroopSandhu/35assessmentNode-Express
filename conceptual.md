@@ -36,3 +36,4 @@ async function getUsers() {
   return [elie, matt, joel];
 }
 ```
+~ each variable is making their request one after the other. with a promise.all() method all the requests happen at the same time
