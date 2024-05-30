@@ -1,7 +1,8 @@
+const { default: axios } = require('axios');
 const fs = require('fs');
+const { nextTick } = require('process');
 const axios = require('axios');
 const process = require('process');
-
 const argv = process.argv;
 
 function readFile(path) {

@@ -18,13 +18,12 @@ app.post('/', async function(req, res, next) {
   }
 });
 
-app.use((err, req, res, next) => {
-  res.status(err.status || 500)
-
-  return res.json({
-    error: err.message,
+app.use(function(err, req, rest, next) {
+  let status = err.status || 500;
+  let message = err.message;
+  return res.status(status).json({
+    error: {message, status}
   })
 })
-app.listen(3000, function() {
-  console.log("Server starting on port 3000")
-})
+
+app.listen(3000)
